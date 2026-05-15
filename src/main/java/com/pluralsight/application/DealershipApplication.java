@@ -1,21 +1,23 @@
 package com.pluralsight.application;
 
+import com.pluralsight.io.DealershipFileManager;
 import com.pluralsight.models.Dealership;
 import com.pluralsight.models.Vehicle;
 import com.pluralsight.ui.UserInterface;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class DealershipApplication
 {
     Dealership dealership;
 
-    public DealershipApplication(Dealership dealership)
+    public DealershipApplication(Dealership dealership) throws IOException
     {
         this.dealership = dealership;
     }
 
-    public void run()
+    public void run() throws IOException
     {
         while(true)
         {
@@ -42,9 +44,12 @@ public class DealershipApplication
                     searchByVehicleType();
                     break;
                 case 7:
-                    addVehicle();
+                    addAVehicle();
                     break;
                 case 0:
+                    UserInterface.endApplication();
+                    System.exit(0);
+                default:
                     UserInterface.endApplication();
                     System.exit(0);
             }
@@ -84,6 +89,25 @@ public class DealershipApplication
 
         // display the vehicles
         UserInterface.displayVehicles(vehicles);
+    }
+    private void addAVehicle() throws IOException {
+        UserInterface.displayMessage("\nAdd a vehicle");
+        UserInterface.displayMessage("--------------------------");
+        int vin = UserInterface.getUserInputInt("Enter the vin: ");
+        int year = UserInterface.getUserInputInt("Enter the year of the vehicle: ");
+        String make = UserInterface.getUserInput("Enter the make: ");
+        String model = UserInterface.getUserInput("Enter the model: ");
+        String type = UserInterface.getUserInput("Enter the vehicle type: ");
+        String color = UserInterface.getUserInput("Enter the color: ");
+        int odometer = UserInterface.getUserInputInt("Enter the miles on the vehicle: ");
+        double price = UserInterface.getUserInputDouble("Enter the price of the vehicle: ");
+
+        Vehicle vehicle = new Vehicle(vin, year, make, model, type, color, odometer, price);
+        DealershipFileManager.addVehicle(vehicle);
+        Dealership newDealership = DealershipFileManager.loadDealership();
+        DealershipFileManager.saveDealership(newDealership);
+
+
     }
 
     private void searchByColor()
