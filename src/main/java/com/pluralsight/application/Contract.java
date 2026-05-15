@@ -4,6 +4,7 @@ import com.pluralsight.models.Vehicle;
 
 public abstract class Contract {
 
+    private boolean type;
     private String date;
     private String customerName;
     private String customerEmail;
@@ -20,6 +21,7 @@ public abstract class Contract {
 
     }
     //getters
+    public String getType() {return this.type;}
     public String getDate(){
         return date;
     }
@@ -32,9 +34,17 @@ public abstract class Contract {
     public Vehicle getVehicleSold(){
         return vehicleSold;
     }
+
+    public void setType(boolean type) {this.type = type;}
     // abstract method for calculation
     public abstract double getTotalPrice();
 
     public abstract double getMonthlyPayment();
+
+    public abstract double getTax();
+
+    public abstract double getProcessingFee();
+
+    public abstract double getRecordingFee();
 
 }

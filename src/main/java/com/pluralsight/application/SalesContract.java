@@ -14,6 +14,11 @@ public class SalesContract extends Contract {
         this.finance = finance;
     }
 
+    public double getTax()
+    {
+        return 0; //how are we calculating tax?
+    }
+
     public double getSalesTax() {
         return getVehicleSold().getPrice() * 0.05;
     }
