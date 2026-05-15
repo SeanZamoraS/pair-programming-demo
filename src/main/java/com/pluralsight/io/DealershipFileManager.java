@@ -23,8 +23,14 @@ public class DealershipFileManager
 
         ArrayList<Vehicle> vehicles = new ArrayList<>();
 
-        while((line = bufferedReader.readLine()) != null)
-        {
+        while((line = bufferedReader.readLine()) != null){
+
+        //empty line
+            if(line.isBlank()){
+                continue;
+            }
+
+
             Vehicle vehicle = getVehicle(line);
 
             vehicles.add(vehicle);
@@ -41,7 +47,7 @@ public class DealershipFileManager
         try(FileWriter fileWriter = new FileWriter("data/inventory.csv",true);
             PrintWriter writer = new PrintWriter(fileWriter))
         {
-            writer.printf("\n%d|%d|%s|%s|%s|%s|%d|%.2f\n",
+            writer.printf("%d|%d|%s|%s|%s|%s|%d|%.2f\n",
                     vehicle.getVin(),
                     vehicle.getYear(),
                     vehicle.getMake(),
